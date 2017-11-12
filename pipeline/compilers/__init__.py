@@ -148,6 +148,8 @@ class SubProcessCompiler(CompilerBase):
             # Decide what to do with captured stdout.
             if stdout:
                 if stdout_captured:
-                    shutil.move(stdout.name, os.path.join(cwd or os.curdir, stdout_captured))
+                    dest = os.path.join(cwd or os.curdir, stdout_captured)
+                    shutil.move(stdout.name, dest)
+                    os.chmod(dest, 0o444)
                 else:
                     os.remove(stdout.name)
